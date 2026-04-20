@@ -22,12 +22,12 @@
     "release": "bun run build && changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.30.0",
-    "@typescript/native-preview": "^7.0.0-dev.20260412.1",
+    "@changesets/cli": "^2.31.0",
+    "@typescript/native-preview": "^7.0.0-dev.20260419.1",
     "jscpd": "^4.0.9",
     "knip": "^5.88.1",
     "oxfmt": "^0.27.0",
-    "oxlint": "^1.59.0",
+    "oxlint": "^1.60.0",
     "typescript": "^5.9.3",
     "zshy": "^0.7.0"
   }
