@@ -23,11 +23,11 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
-    "@typescript/native-preview": "^7.0.0-dev.20260510.1",
-    "jscpd": "^4.1.0",
+    "@typescript/native-preview": "^7.0.0-dev.20260517.1",
+    "jscpd": "^4.2.3",
     "knip": "^5.88.1",
     "oxfmt": "^0.27.0",
-    "oxlint": "^1.63.0",
+    "oxlint": "^1.65.0",
     "typescript": "^5.9.3",
     "zshy": "^0.7.2"
   }
