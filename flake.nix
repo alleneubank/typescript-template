@@ -2,13 +2,15 @@
   description = "TypeScript project template";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # Track the latest stable release channel: recent tool versions AND fully
+    # Hydra-built/cached for darwin. nixpkgs-unstable lags on darwin for some
+    # packages, which forces slow source builds; stable avoids that trap.
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     flake-utils.url = "github:numtide/flake-utils";
 
     # Uncomment for overlays that require unfree packages (e.g., atlas-overlay)
-    # nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/nixos-unstable";
-    # nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/nixos-26.05";
+    # nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
     bun-overlay = {
       url = "github:0xbigboss/bun-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,27 +31,16 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-unstable,
     flake-utils,
     bun-overlay,
     tilt-overlay,
     ...
   } @ inputs: let
+    # bun-overlay supplies an official-binary `bun`; tilt-overlay an
+    # official-binary `tilt`. Both shadow their nixpkgs counterparts.
     overlays = [
       bun-overlay.overlays.default
       tilt-overlay.overlays.default
-      (final: prev: {
-        unstable = import nixpkgs-unstable {
-          inherit (prev) system;
-          overlays = [
-            bun-overlay.overlays.default
-            tilt-overlay.overlays.default
-          ];
-          config = {
-            allowUnfree = true;
-          };
-        };
-      })
     ];
 
     systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
@@ -69,12 +60,12 @@
           name = "ts-dev";
           nativeBuildInputs = [
             pkgs.bun
-            pkgs.unstable.fnm
-            pkgs.unstable.jq
-            pkgs.unstable.ripgrep
-            pkgs.unstable.coreutils
-            pkgs.unstable.tilt
-            pkgs.unstable.lefthook
+            pkgs.fnm
+            pkgs.jq
+            pkgs.ripgrep
+            pkgs.coreutils
+            pkgs.tilt
+            pkgs.lefthook
           ];
           shellHook =
             ''
