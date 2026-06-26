@@ -7,19 +7,19 @@
   ],
   "type": "module",
   "scripts": {
-    "setup": "bun scripts/setup.ts",
-    "build": "bun run --filter './packages/*' build && bun run --filter './apps/*' build",
+    "setup": "nub scripts/setup.ts",
+    "build": "nub run -r --filter './packages/*' build && nub run -r --filter './apps/*' build",
     "typecheck": "tsgo -b",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
-    "check": "bun run typecheck && bun run lint && bun run format:check",
+    "check": "nub run typecheck && nub run lint && nub run format:check",
     "knip": "knip",
     "jscpd": "jscpd .",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "bun run build && changeset publish"
+    "release": "nub run build && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",

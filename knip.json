@@ -15,5 +15,6 @@
     }
   },
   "ignoreDependencies": [],
+  "ignoreBinaries": ["nub", "nubx"],
   "ignoreExportsUsedInFile": true
 }

@@ -17,7 +17,7 @@ jobs:
 
       - uses: DeterminateSystems/nix-installer-action@main
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: nubjs/setup-nub@v0
 
       - name: Update .node-version to latest LTS
         run: |
@@ -27,18 +27,18 @@ jobs:
           echo "$LATEST_LTS" > .node-version
 
       - name: Update npm packages
-        run: bun update
+        run: nub update
 
       - name: Update Nix flake inputs
         run: nix flake update
 
       - name: Install and verify
         run: |
-          bun install
-          bun run check
+          nub install
+          nub run check
 
       - name: Build
-        run: bun run build
+        run: nub run build
 
       - name: Commit and push
         run: |

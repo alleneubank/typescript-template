@@ -16,42 +16,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run typecheck
+      - uses: nubjs/setup-nub@v0
+      - run: nub ci
+      - run: nub run typecheck
 
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run lint
+      - uses: nubjs/setup-nub@v0
+      - run: nub ci
+      - run: nub run lint
 
   format:
     name: Format Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run format:check
+      - uses: nubjs/setup-nub@v0
+      - run: nub ci
+      - run: nub run format:check
 
   knip:
     name: Unused Dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run knip
+      - uses: nubjs/setup-nub@v0
+      - run: nub ci
+      - run: nub run knip
 
   jscpd:
     name: Code Duplication
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run jscpd
+      - uses: nubjs/setup-nub@v0
+      - run: nub ci
+      - run: nub run jscpd

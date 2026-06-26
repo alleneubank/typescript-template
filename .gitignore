@@ -12,9 +12,6 @@ packages/*/src/*.d.ts
 apps/*/src/*.js
 apps/*/src/*.d.ts
 
-# Bun
-bun.lockb
-
 # Environment
 .env
 .env.local

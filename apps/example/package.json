@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "echo 'no build step'",
-    "start": "bun src/index.ts"
+    "start": "nub src/index.ts"
   },
   "dependencies": {
     "@template/utils": "workspace:*"

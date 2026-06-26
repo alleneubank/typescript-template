@@ -11,10 +11,12 @@
     # Uncomment for overlays that require unfree packages (e.g., atlas-overlay)
     # nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/nixos-26.05";
     # nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
-    bun-overlay = {
-      url = "github:0xbigboss/bun-overlay";
+    # nub ships its own prebuilt-binary flake (fetches the per-platform release
+    # tarball + autoPatchelf; no cargo build). `follows` dedupes nixpkgs out of
+    # our lock. nub replaces bun (runtime + package manager), fnm, and corepack.
+    nub = {
+      url = "github:nubjs/nub";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
     tilt-overlay = {
       url = "github:0xbigboss/tilt-overlay";
@@ -32,14 +34,14 @@
     self,
     nixpkgs,
     flake-utils,
-    bun-overlay,
+    nub,
     tilt-overlay,
     ...
   } @ inputs: let
-    # bun-overlay supplies an official-binary `bun`; tilt-overlay an
-    # official-binary `tilt`. Both shadow their nixpkgs counterparts.
+    # tilt-overlay supplies an official-binary `tilt` that shadows its nixpkgs
+    # counterpart. nub is consumed as its own prebuilt-binary flake package
+    # (wired into the devShell below), not as an overlay.
     overlays = [
-      bun-overlay.overlays.default
       tilt-overlay.overlays.default
     ];
 
@@ -59,19 +61,17 @@
         devShells.default = pkgs.mkShell {
           name = "ts-dev";
           nativeBuildInputs = [
-            pkgs.bun
-            pkgs.fnm
+            nub.packages.${system}.default
             pkgs.jq
             pkgs.ripgrep
             pkgs.coreutils
             pkgs.tilt
             pkgs.lefthook
           ];
+          # nub auto-provisions Node from .node-version on first run, so there is
+          # no version-manager shell hook (fnm/corepack are gone).
           shellHook =
-            ''
-              eval "$(fnm env --use-on-cd --corepack-enabled --shell bash)"
-            ''
-            + (pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
+            (pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
               export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
             '')
             + (pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''

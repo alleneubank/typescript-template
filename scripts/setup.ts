@@ -1,17 +1,22 @@
-#!/usr/bin/env bun
+#!/usr/bin/env -S nub
 
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import { createInterface } from 'node:readline/promises'
 
 // Split to avoid self-replacement
 const OLD_SCOPE = ['@', 'template'].join('')
 
 async function prompt(question: string): Promise<string> {
-  process.stdout.write(question)
-  for await (const line of console) {
-    return line.trim()
+  // node:readline/promises replaces Bun's `for await (const line of console)`
+  // stdin iterator — stock-Node API, works under nub.
+  const rl = createInterface({ input: process.stdin, output: process.stdout })
+  try {
+    const answer = await rl.question(question)
+    return answer.trim()
+  } finally {
+    rl.close()
   }
-  return ''
 }
 
 async function findFiles(dir: string, pattern: RegExp): Promise<string[]> {
@@ -71,7 +76,7 @@ async function main(): Promise<void> {
 
   console.log(`\nReplacing ${OLD_SCOPE} → ${scope}...\n`)
 
-  const root = join(import.meta.dir, '..')
+  const root = join(import.meta.dirname, '..')
   const files = await findFiles(root, /\.(json|ts|tsx)$/)
 
   const results = await Promise.all(files.map((f) => replaceInFile(f, OLD_SCOPE, scope)))
@@ -87,8 +92,8 @@ async function main(): Promise<void> {
   console.log(`\nDone! Updated ${count} files.`)
   console.log('\nNext steps:')
   console.log('  1. Update root package.json "name" field')
-  console.log('  2. Run: bun install')
-  console.log('  3. Run: bun run check')
+  console.log('  2. Run: nub install')
+  console.log('  3. Run: nub run check')
 }
 
 main()

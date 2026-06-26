@@ -2,36 +2,36 @@ pre-commit:
   commands:
     typecheck:
       glob: '*.{ts,tsx}'
-      run: bun run typecheck
+      run: nub run typecheck
     lint:
       glob: '*.{js,ts,cjs,mjs,jsx,tsx}'
-      run: npx oxlint --fix {staged_files}
+      run: nubx oxlint --fix {staged_files}
       stage_fixed: true
     format:
       glob: '*.{js,ts,cjs,mjs,jsx,tsx,json,jsonc}'
-      run: npx oxfmt --write {staged_files}
+      run: nubx oxfmt --write {staged_files}
       stage_fixed: true
     knip:
       glob: '*.{ts,tsx,json}'
-      run: bun run knip
+      run: nub run knip
     jscpd:
       glob: '*.{ts,tsx}'
-      run: bun run jscpd
+      run: nub run jscpd
 
 pre-push:
   commands:
     typecheck:
       glob: '*.{ts,tsx}'
-      run: bun run typecheck
+      run: nub run typecheck
     lint:
       glob: '*.{js,ts,cjs,mjs,jsx,tsx}'
-      run: npx oxlint {push_files}
+      run: nubx oxlint {push_files}
     format:
       glob: '*.{js,ts,cjs,mjs,jsx,tsx,json,jsonc}'
-      run: npx oxfmt --check {push_files}
+      run: nubx oxfmt --check {push_files}
     knip:
       glob: '*.{ts,tsx,json}'
-      run: bun run knip
+      run: nub run knip
     jscpd:
       glob: '*.{ts,tsx}'
-      run: bun run jscpd
+      run: nub run jscpd
