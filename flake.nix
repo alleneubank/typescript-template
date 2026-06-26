@@ -11,12 +11,13 @@
     # Uncomment for overlays that require unfree packages (e.g., atlas-overlay)
     # nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/nixos-26.05";
     # nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
-    # nub ships its own prebuilt-binary flake (fetches the per-platform release
-    # tarball + autoPatchelf; no cargo build). `follows` dedupes nixpkgs out of
-    # our lock. nub replaces bun (runtime + package manager), fnm, and corepack.
-    nub = {
-      url = "github:nubjs/nub";
+    # nub-overlay supplies nub from the official prebuilt release tarballs. It
+    # preserves nub's bin/ + runtime/ sibling layout, so TypeScript execution
+    # works the same way inside and outside Nix.
+    nub-overlay = {
+      url = "github:alleneubank/nub-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
     tilt-overlay = {
       url = "github:0xbigboss/tilt-overlay";
@@ -34,14 +35,14 @@
     self,
     nixpkgs,
     flake-utils,
-    nub,
+    nub-overlay,
     tilt-overlay,
     ...
   } @ inputs: let
-    # tilt-overlay supplies an official-binary `tilt` that shadows its nixpkgs
-    # counterpart. nub is consumed as its own prebuilt-binary flake package
-    # (wired into the devShell below), not as an overlay.
+    # Official-binary overlays shadow nixpkgs packages for tools where upstream
+    # release artifacts are the source of truth.
     overlays = [
+      nub-overlay.overlays.default
       tilt-overlay.overlays.default
     ];
 
@@ -61,7 +62,7 @@
         devShells.default = pkgs.mkShell {
           name = "ts-dev";
           nativeBuildInputs = [
-            nub.packages.${system}.default
+            pkgs.nub
             pkgs.jq
             pkgs.ripgrep
             pkgs.coreutils
