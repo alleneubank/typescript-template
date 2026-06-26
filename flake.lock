@@ -157,13 +157,13 @@
       "locked": {
         "lastModified": 1773083596,
         "narHash": "sha256-48QrRx6+oFUX6eDzGr7bztInqVZH8IZlbWKxHQQ26dE=",
-        "owner": "0xbigboss",
+        "owner": "alleneubank",
         "repo": "tilt-overlay",
         "rev": "a106910a266879f40d361d60b5e4deb2df23b613",
         "type": "github"
       },
       "original": {
-        "owner": "0xbigboss",
+        "owner": "alleneubank",
         "repo": "tilt-overlay",
         "type": "github"
       }

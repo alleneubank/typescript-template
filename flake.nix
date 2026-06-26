@@ -20,7 +20,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     tilt-overlay = {
-      url = "github:0xbigboss/tilt-overlay";
+      url = "github:alleneubank/tilt-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
