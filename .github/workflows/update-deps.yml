@@ -8,6 +8,9 @@ on:
 permissions:
   contents: write
 
+env:
+  COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+
 jobs:
   update:
     name: Update Dependencies
@@ -17,7 +20,16 @@ jobs:
 
       - uses: DeterminateSystems/nix-installer-action@main
 
-      - uses: nubjs/setup-nub@v0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+
+      - name: Enable Yarn
+        run: corepack enable
 
       - name: Update .node-version to latest LTS
         run: |
@@ -27,18 +39,19 @@ jobs:
           echo "$LATEST_LTS" > .node-version
 
       - name: Update npm packages
-        run: nub update
+        run: yarn up -R '*'
 
       - name: Update Nix flake inputs
         run: nix flake update
 
       - name: Install and verify
         run: |
-          nub install
-          nub run check
+          yarn install --immutable
+          bun run check
+          bun run test
 
       - name: Build
-        run: nub run build
+        run: bun run build
 
       - name: Commit and push
         run: |

@@ -1,0 +1,3 @@
+[run]
+# `bun run` executes Node shebangs with Bun. Yarn still owns installation.
+bun = true

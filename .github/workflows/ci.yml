@@ -10,57 +10,118 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+
 jobs:
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nubjs/setup-nub@v0
-      - run: nub ci
-      - run: nub run typecheck
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: bun run typecheck
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: bun run test
 
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nubjs/setup-nub@v0
-      - run: nub ci
-      - run: nub run build
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: bun run build
 
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nubjs/setup-nub@v0
-      - run: nub ci
-      - run: nub run lint
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: bun run lint
 
   format:
     name: Format Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nubjs/setup-nub@v0
-      - run: nub ci
-      - run: nub run format:check
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: bun run format:check
 
   knip:
     name: Unused Dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nubjs/setup-nub@v0
-      - run: nub ci
-      - run: nub run knip
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: bun run knip
 
   jscpd:
     name: Code Duplication
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: nubjs/setup-nub@v0
-      - run: nub ci
-      - run: nub run jscpd
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: yarn
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: bun run jscpd

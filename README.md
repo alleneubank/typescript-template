@@ -1,6 +1,6 @@
 # typescript-template
 
-A TypeScript monorepo template: nub workspaces, TypeScript 7, tsdown builds,
+A TypeScript monorepo template: Yarn workspaces, Bun 1.4.3, TypeScript 7, tsdown builds,
 oxlint, oxfmt, knip, jscpd, and a Nix dev shell.
 
 ## Getting started
@@ -8,9 +8,10 @@ oxlint, oxfmt, knip, jscpd, and a Nix dev shell.
 Create a repository from this template, then:
 
 ```sh
-nub install
-nub run setup      # prompts for your package scope, e.g. @myscope
-nub run check
+yarn install
+bun run setup      # prompts for your package scope, e.g. @myscope
+bun run check
+bun run test
 ```
 
 `setup` replaces the `@template` scope across every manifest and source file. It
@@ -22,14 +23,16 @@ whatever you build from it.
 
 | Command                           | Does                                         |
 | --------------------------------- | -------------------------------------------- |
-| `nub run check`                   | typecheck, lint, and format check            |
-| `nub run build`                   | build every package with tsdown              |
-| `nub run typecheck`               | `tsc -b` across all projects                 |
-| `nub run lint` / `lint:fix`       | oxlint                                       |
-| `nub run format` / `format:check` | oxfmt                                        |
-| `nub run knip`                    | find unused files, exports, and dependencies |
-| `nub run jscpd`                   | copy-paste detection                         |
-| `nub run changeset`               | record a release note                        |
+| `bun run check`                   | typecheck, lint, and format check            |
+| `bun run test`                    | unit tests with `bun test`                   |
+| `bun run build`                   | build every package with tsdown              |
+| `bun run typecheck`               | `bun --check -b` across all projects         |
+| `bun run lint` / `lint:fix`       | oxlint                                       |
+| `bun run format` / `format:check` | oxfmt                                        |
+| `bun run knip`                    | find unused files, exports, and dependencies |
+| `bun run jscpd`                   | copy-paste detection                         |
+| `bun run changeset`               | record a release note                        |
+| `yarn install`                    | install dependencies from `yarn.lock`        |
 
 ## Layout
 
@@ -39,8 +42,7 @@ packages/   publishable libraries
 ```
 
 Packages build with tsdown into `dist/`, unbundled, as ESM and CJS with matching
-declarations. `tsc -b` emits declarations into `.tsbuild/` for typechecking only;
-the two never share a directory, because tsdown cleans `dist/` on every build.
+declarations. `bun check` follows project references and leaves `dist/` to tsdown.
 
 `isolatedDeclarations` is on, so exported symbols need explicit type
 annotations. That is what lets tsdown generate declarations through oxc rather
@@ -52,7 +54,9 @@ Copy a directory under `packages/`, then:
 
 1. Keep the `<scope>/source` condition first in its `exports`, pointing at
    `./src/index.ts`. Typechecking resolves sibling packages from source through
-   that condition, so `check` works before anything is built.
+   that condition, so `check` works before anything is built. Bun does not read
+   `customConditions` from `tsconfig` at runtime, so `test` and `start` pass the
+   same condition with `--conditions`.
 2. Add it to `references` in the root `tsconfig.json`, and in the `tsconfig.json`
    of any package that imports it.
 
@@ -60,8 +64,10 @@ There is no central path map to update.
 
 ## Requirements
 
-`nub` is the package manager and runner. The Nix flake provides it along with the
-rest of the toolchain:
+Yarn 4 is the package manager (`packageManager` in `package.json`, `yarn.lock`).
+Bun 1.4.3 is the runtime and test runner, pinned in `.bun-version` and
+`engines.bun`. The Nix flake provides that Bun build, Node (for Yarn via
+Corepack), and the rest of the toolchain:
 
 ```sh
 nix develop        # or: direnv allow, using the included .envrc

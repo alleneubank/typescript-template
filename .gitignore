@@ -38,6 +38,16 @@ coverage/
 result
 .direnv/
 
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+yarn-error.log*
+
 # Logs
 *.log
 npm-debug.log*

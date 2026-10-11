@@ -7,27 +7,33 @@
   ],
   "type": "module",
   "scripts": {
-    "setup": "nub scripts/setup.ts",
-    "build": "nub run -r --filter './packages/*' build && nub run -r --filter './apps/*' build",
-    "typecheck": "tsc -b",
+    "setup": "bun scripts/setup.ts",
+    "build": "bun run --filter './packages/*' build && bun run --filter './apps/*' build",
+    "typecheck": "bun --check -b",
     "lint": "oxlint .",
     "lint:fix": "oxlint --fix .",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
-    "check": "nub run typecheck && nub run lint && nub run format:check",
+    "check": "bun run typecheck && bun run lint && bun run format:check",
+    "test": "bun --conditions=@template/source test",
     "knip": "knip",
     "jscpd": "jscpd .",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "nub run build && changeset publish"
+    "release": "bun run build && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.1",
+    "@types/bun": "npm:bun-types@1.4.3",
     "jscpd": "^5.4.0",
     "knip": "^6.39.0",
     "oxfmt": "^0.60.0",
     "oxlint": "^1.86.0",
     "tsdown": "^0.22.14",
     "typescript": "^7.0.2"
-  }
+  },
+  "engines": {
+    "bun": "1.4.3"
+  },
+  "packageManager": "yarn@4.18.1"
 }
