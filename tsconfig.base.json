@@ -18,9 +18,8 @@
 
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
-    // Lets tsdown emit declarations via oxc instead of the TypeScript API, which
-    // keeps the build off TypeScript 7's unstable API. Requires explicit type
-    // annotations on every exported symbol.
+    // Lets tsdown emit declarations via oxc. Requires explicit type annotations
+    // on every exported symbol.
     "isolatedDeclarations": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -34,6 +33,10 @@
     // scripts/setup.ts rewrites the scope along with everything else.
     "customConditions": ["@template/source"],
 
-    "noEmit": true
+    "noEmit": true,
+
+    // Bun 1.4.3 ships these via bun-types (aliased as @types/bun). `bun --check`
+    // only resolves bun:test when this list includes "bun".
+    "types": ["bun"]
   }
 }

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S nub
+#!/usr/bin/env bun
 
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
@@ -92,8 +92,8 @@ async function main(): Promise<void> {
   console.log('\nNext steps:')
   console.log('  1. Update root package.json "name" field')
   console.log('  2. Replace or delete LICENSE — it covers the template, not your project')
-  console.log('  3. Run: nub install')
-  console.log('  4. Run: nub run check')
+  console.log('  3. Run: bun install')
+  console.log('  4. Run: bun run check')
 }
 
 main()

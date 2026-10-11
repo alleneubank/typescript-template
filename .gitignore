@@ -6,7 +6,7 @@ dist/
 build/
 *.tsbuildinfo
 
-# Declarations emitted by `tsc -b` for typechecking only
+# Declaration emit from project references. tsdown owns dist/.
 .tsbuild/
 
 # Compiled JS in src (should be in dist)

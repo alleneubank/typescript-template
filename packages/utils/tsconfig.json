@@ -2,9 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
-    // tsdown owns dist/. tsc emits declarations only, into its own directory, so
-    // the two never fight: tsdown's clean step would otherwise delete tsc's
-    // output while .tsbuildinfo still claimed it was up to date (TS6305).
+    // Referenced projects cannot disable emit (TS6310). Declarations go to
+    // .tsbuild so they stay out of dist/, which tsdown owns and cleans.
     "outDir": "./.tsbuild",
     "rootDir": "./src",
     "noEmit": false,

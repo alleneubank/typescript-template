@@ -1,0 +1,8 @@
+[run]
+# `bun run` executes Node shebangs with Bun.
+bun = true
+
+[install]
+# Flat node_modules. React Native autolinking and packages with hardcoded
+# node_modules paths expect a hoisted tree, not an isolated virtual store.
+linker = "hoisted"
