@@ -10,12 +10,15 @@ Create a repository from this template, then:
 ```sh
 bun install
 bun run setup      # prompts for your package scope, e.g. @myscope
+bun install        # relink workspace packages under the new scope
 bun run check
 bun run test
 ```
 
 `setup` replaces the `@template` scope across every manifest and source file. It
-does not touch the root `package.json` `name` or this README — update those by
+does not rewrite `bun.lock` or the links already in `node_modules`, so `check`
+and `test` cannot resolve the renamed packages until `bun install` runs again.
+It does not touch the root `package.json` `name` or this README — update those by
 hand, and replace or delete `LICENSE`, which covers the template rather than
 whatever you build from it.
 
