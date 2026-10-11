@@ -10,24 +10,16 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
-
 jobs:
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: yarn
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
-      - run: corepack enable
-      - run: yarn install --immutable
+      - run: bun install --frozen-lockfile
       - run: bun run typecheck
 
   test:
@@ -35,15 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: yarn
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
-      - run: corepack enable
-      - run: yarn install --immutable
+      - run: bun install --frozen-lockfile
       - run: bun run test
 
   build:
@@ -51,15 +38,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: yarn
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
-      - run: corepack enable
-      - run: yarn install --immutable
+      - run: bun install --frozen-lockfile
       - run: bun run build
 
   lint:
@@ -67,15 +49,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: yarn
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
-      - run: corepack enable
-      - run: yarn install --immutable
+      - run: bun install --frozen-lockfile
       - run: bun run lint
 
   format:
@@ -83,15 +60,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: yarn
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
-      - run: corepack enable
-      - run: yarn install --immutable
+      - run: bun install --frozen-lockfile
       - run: bun run format:check
 
   knip:
@@ -99,15 +71,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: yarn
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
-      - run: corepack enable
-      - run: yarn install --immutable
+      - run: bun install --frozen-lockfile
       - run: bun run knip
 
   jscpd:
@@ -115,13 +82,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-          cache: yarn
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
-      - run: corepack enable
-      - run: yarn install --immutable
+      - run: bun install --frozen-lockfile
       - run: bun run jscpd

@@ -95,7 +95,6 @@
             runHook postInstall
           '';
         };
-        nodejs = pkgs.nodejs_24 or pkgs.nodejs;
       in {
         formatter = pkgs.alejandra;
 
@@ -103,24 +102,16 @@
           name = "ts-dev";
           nativeBuildInputs = [
             bun
-            nodejs
             pkgs.jq
             pkgs.ripgrep
             pkgs.coreutils
             pkgs.tilt
             pkgs.lefthook
           ];
-          # Node is here so Corepack can provide the Yarn version pinned in
-          # package.json. Bun is pinned above to the official 1.4.3 binary.
+          # Bun is pinned above to the official 1.4.3 binary. It installs
+          # dependencies, runs scripts, and typechecks the project.
           shellHook =
-            ''
-              export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-              shim_dir="''${XDG_DATA_HOME:-$HOME/.local/share}/corepack/bin"
-              mkdir -p "$shim_dir"
-              corepack enable --install-directory "$shim_dir"
-              export PATH="$shim_dir:$PATH"
-            ''
-            + (pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
+            (pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
               export PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true
             '')
             + (pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''

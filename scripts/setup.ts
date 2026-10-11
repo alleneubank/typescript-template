@@ -92,7 +92,7 @@ async function main(): Promise<void> {
   console.log('\nNext steps:')
   console.log('  1. Update root package.json "name" field')
   console.log('  2. Replace or delete LICENSE — it covers the template, not your project')
-  console.log('  3. Run: yarn install')
+  console.log('  3. Run: bun install')
   console.log('  4. Run: bun run check')
 }
 

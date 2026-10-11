@@ -1,14 +1,14 @@
 # typescript-template
 
-A TypeScript monorepo template: Yarn workspaces, Bun 1.4.3, TypeScript 7, tsdown builds,
-oxlint, oxfmt, knip, jscpd, and a Nix dev shell.
+A TypeScript monorepo template: Bun 1.4.3 workspaces, tsdown builds, oxlint,
+oxfmt, knip, jscpd, and a Nix dev shell.
 
 ## Getting started
 
 Create a repository from this template, then:
 
 ```sh
-yarn install
+bun install
 bun run setup      # prompts for your package scope, e.g. @myscope
 bun run check
 bun run test
@@ -23,6 +23,7 @@ whatever you build from it.
 
 | Command                           | Does                                         |
 | --------------------------------- | -------------------------------------------- |
+| `bun install`                     | install dependencies from `bun.lock`         |
 | `bun run check`                   | typecheck, lint, and format check            |
 | `bun run test`                    | unit tests with `bun test`                   |
 | `bun run build`                   | build every package with tsdown              |
@@ -32,7 +33,6 @@ whatever you build from it.
 | `bun run knip`                    | find unused files, exports, and dependencies |
 | `bun run jscpd`                   | copy-paste detection                         |
 | `bun run changeset`               | record a release note                        |
-| `yarn install`                    | install dependencies from `yarn.lock`        |
 
 ## Layout
 
@@ -64,10 +64,11 @@ There is no central path map to update.
 
 ## Requirements
 
-Yarn 4 is the package manager (`packageManager` in `package.json`, `yarn.lock`).
-Bun 1.4.3 is the runtime and test runner, pinned in `.bun-version` and
-`engines.bun`. The Nix flake provides that Bun build, Node (for Yarn via
-Corepack), and the rest of the toolchain:
+Bun 1.4.3 is the package manager, runtime, test runner, and type checker. The
+pin lives in `.bun-version` and `engines.bun`. The lockfile is `bun.lock`.
+Installs use a hoisted `node_modules` tree.
+
+The Nix flake provides that Bun build along with the rest of the toolchain:
 
 ```sh
 nix develop        # or: direnv allow, using the included .envrc

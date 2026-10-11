@@ -8,9 +8,6 @@ on:
 permissions:
   contents: write
 
-env:
-  COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
-
 jobs:
   update:
     name: Update Dependencies
@@ -20,33 +17,19 @@ jobs:
 
       - uses: DeterminateSystems/nix-installer-action@main
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: .bun-version
 
-      - name: Enable Yarn
-        run: corepack enable
-
-      - name: Update .node-version to latest LTS
-        run: |
-          LATEST_LTS=$(curl -s https://nodejs.org/dist/index.json | \
-            jq -r '[.[] | select(.lts != false)] | first | .version' | \
-            sed 's/^v//')
-          echo "$LATEST_LTS" > .node-version
-
       - name: Update npm packages
-        run: yarn up -R '*'
+        run: bun update
 
       - name: Update Nix flake inputs
         run: nix flake update
 
       - name: Install and verify
         run: |
-          yarn install --immutable
+          bun install --frozen-lockfile
           bun run check
           bun run test
 

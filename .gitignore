@@ -6,7 +6,7 @@ dist/
 build/
 *.tsbuildinfo
 
-# Declarations emitted by `tsc -b` for typechecking only
+# Declaration emit from project references. tsdown owns dist/.
 .tsbuild/
 
 # Compiled JS in src (should be in dist)
@@ -37,16 +37,6 @@ coverage/
 # Nix
 result
 .direnv/
-
-# Yarn
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
-yarn-error.log*
 
 # Logs
 *.log

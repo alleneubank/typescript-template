@@ -29,11 +29,9 @@
     "knip": "^6.39.0",
     "oxfmt": "^0.60.0",
     "oxlint": "^1.86.0",
-    "tsdown": "^0.22.14",
-    "typescript": "^7.0.2"
+    "tsdown": "^0.22.14"
   },
   "engines": {
     "bun": "1.4.3"
-  },
-  "packageManager": "yarn@4.18.1"
+  }
 }

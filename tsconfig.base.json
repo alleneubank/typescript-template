@@ -18,9 +18,8 @@
 
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
-    // Lets tsdown emit declarations via oxc instead of the TypeScript API, which
-    // keeps the build off TypeScript 7's unstable API. Requires explicit type
-    // annotations on every exported symbol.
+    // Lets tsdown emit declarations via oxc. Requires explicit type annotations
+    // on every exported symbol.
     "isolatedDeclarations": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
