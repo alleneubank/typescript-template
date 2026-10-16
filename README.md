@@ -80,7 +80,9 @@ same lockfile through `jdx/mise-action`. Activate mise in your shell, prefix
 commands with `mise exec --`, or review `.envrc` and run `direnv allow`; the
 direnv integration also loads the optional `.env`, `.env.local`, and
 `.envrc.private` files. On Linux, mise sets
-`PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true`.
+`PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true`. uutils ships one multicall
+binary, so run its utilities as `coreutils <utility>`, for example
+`coreutils sort`; plain `sort` stays the system one.
 
 The weekly dependency workflow bumps the mise pins and `mise.lock` except Bun;
 change Bun in `mise.toml`, `engines.bun`, and `@types/bun` together, then run
