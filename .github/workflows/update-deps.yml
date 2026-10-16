@@ -15,17 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: DeterminateSystems/nix-installer-action@main
-
-      - uses: oven-sh/setup-bun@v2
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
-          bun-version-file: .bun-version
+          version: '2026.10.4'
+
+      - name: Update mise toolchain pins and lockfile
+        # Bun is pinned with engines.bun and @types/bun; bump the three together by hand.
+        run: mise upgrade --bump --exclude bun
 
       - name: Update npm packages
         run: bun update
-
-      - name: Update Nix flake inputs
-        run: nix flake update
 
       - name: Install and verify
         run: |

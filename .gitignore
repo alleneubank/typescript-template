@@ -34,8 +34,7 @@ Thumbs.db
 # Testing
 coverage/
 
-# Nix
-result
+# direnv
 .direnv/
 
 # Logs

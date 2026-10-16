@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
-          bun-version-file: .bun-version
+          version: '2026.10.4'
       - run: bun install --frozen-lockfile
       - run: bun run typecheck
 
@@ -27,9 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
-          bun-version-file: .bun-version
+          version: '2026.10.4'
       - run: bun install --frozen-lockfile
       - run: bun run test
 
@@ -38,9 +38,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
-          bun-version-file: .bun-version
+          version: '2026.10.4'
       - run: bun install --frozen-lockfile
       - run: bun run build
 
@@ -49,9 +49,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
-          bun-version-file: .bun-version
+          version: '2026.10.4'
       - run: bun install --frozen-lockfile
       - run: bun run lint
 
@@ -60,9 +60,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
-          bun-version-file: .bun-version
+          version: '2026.10.4'
       - run: bun install --frozen-lockfile
       - run: bun run format:check
 
@@ -71,9 +71,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
-          bun-version-file: .bun-version
+          version: '2026.10.4'
       - run: bun install --frozen-lockfile
       - run: bun run knip
 
@@ -82,8 +82,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
-          bun-version-file: .bun-version
+          version: '2026.10.4'
       - run: bun install --frozen-lockfile
       - run: bun run jscpd

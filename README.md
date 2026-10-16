@@ -1,13 +1,16 @@
 # typescript-template
 
 A TypeScript monorepo template: Bun 1.4.3 workspaces, tsdown builds, oxlint,
-oxfmt, knip, jscpd, and a Nix dev shell.
+oxfmt, knip, jscpd, and a mise-pinned toolchain.
 
 ## Getting started
 
-Create a repository from this template, then:
+Create a repository from this template. With [mise](https://mise.jdx.dev)
+installed:
 
 ```sh
+mise trust
+mise install --locked
 bun install
 bun run setup      # prompts for your package scope, e.g. @myscope
 bun install        # relink workspace packages under the new scope
@@ -68,11 +71,19 @@ There is no central path map to update.
 ## Requirements
 
 Bun 1.4.3 is the package manager, runtime, test runner, and type checker. The
-pin lives in `.bun-version` and `engines.bun`. The lockfile is `bun.lock`.
+pin lives in `mise.toml` and `engines.bun`. The lockfile is `bun.lock`.
 Installs use a hoisted `node_modules` tree.
 
-The Nix flake provides that Bun build along with the rest of the toolchain:
+`mise.toml` and `mise.lock` pin Bun along with Tilt, lefthook, jq, ripgrep, and
+uutils coreutils, with a checksum for each platform's download. CI installs the
+same lockfile through `jdx/mise-action`. Activate mise in your shell, prefix
+commands with `mise exec --`, or review `.envrc` and run `direnv allow`; the
+direnv integration also loads the optional `.env`, `.env.local`, and
+`.envrc.private` files. On Linux, mise sets
+`PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=true`. uutils ships one multicall
+binary, so run its utilities as `coreutils <utility>`, for example
+`coreutils sort`; plain `sort` stays the system one.
 
-```sh
-nix develop        # or: direnv allow, using the included .envrc
-```
+The weekly dependency workflow bumps the mise pins and `mise.lock` except Bun;
+change Bun in `mise.toml`, `engines.bun`, and `@types/bun` together, then run
+`mise lock`.
