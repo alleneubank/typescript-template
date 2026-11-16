@@ -6,7 +6,7 @@ lockfile_platforms = ["linux-x64", "linux-arm64", "macos-x64", "macos-arm64"]
 # Bun is the package manager, runtime, test runner, and type checker. Keep this
 # pin in step with `engines.bun` and the `@types/bun` version in package.json.
 bun = "1.4.3"
-"github:tilt-dev/tilt" = { version = "0.37.8", exe = "tilt" }
+"github:tilt-dev/tilt" = { version = "0.37.9", exe = "tilt" }
 "aqua:evilmartians/lefthook" = "2.2.2"
 "aqua:jqlang/jq" = "1.8.2"
 "aqua:BurntSushi/ripgrep" = "15.2.0"
