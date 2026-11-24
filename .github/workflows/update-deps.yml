@@ -11,7 +11,10 @@ permissions:
 jobs:
   update:
     name: Update Dependencies
-    runs-on: ubuntu-latest
+    # macOS, so a bump to a release without macOS builds fails here instead of
+    # landing a lockfile that `mise install --locked` rejects on a Mac. CI's
+    # Linux jobs cover the other side after the push.
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -21,7 +24,12 @@ jobs:
 
       - name: Update mise toolchain pins and lockfile
         # Bun is pinned with engines.bun and @types/bun; bump the three together by hand.
-        run: mise upgrade --bump --exclude bun
+        # uutils coreutils stays on 0.12.0 until a release ships macOS builds again
+        # (0.13.0 has none); drop the exclusion then.
+        run: mise upgrade --bump --exclude bun --exclude aqua:uutils/coreutils
+
+      - name: Install the bumped toolchain from the lockfile
+        run: mise install --locked
 
       - name: Update npm packages
         run: bun update
