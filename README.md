@@ -1,6 +1,6 @@
 # typescript-template
 
-A TypeScript monorepo template: Bun 1.4.3 workspaces, tsdown builds, oxlint,
+A TypeScript monorepo template: Bun 1.4.5 workspaces, tsdown builds, oxlint,
 oxfmt, knip, jscpd, and a mise-pinned toolchain.
 
 ## Getting started
@@ -70,7 +70,7 @@ There is no central path map to update.
 
 ## Requirements
 
-Bun 1.4.3 is the package manager, runtime, test runner, and type checker. The
+Bun 1.4.5 is the package manager, runtime, test runner, and type checker. The
 pin lives in `mise.toml` and `engines.bun`. The lockfile is `bun.lock`.
 Installs use a hoisted `node_modules` tree.
 
@@ -84,6 +84,8 @@ direnv integration also loads the optional `.env`, `.env.local`, and
 binary, so run its utilities as `coreutils <utility>`, for example
 `coreutils sort`; plain `sort` stays the system one.
 
-The weekly dependency workflow bumps the mise pins and `mise.lock` except Bun;
-change Bun in `mise.toml`, `engines.bun`, and `@types/bun` together, then run
-`mise lock`.
+The weekly dependency workflow bumps the mise pins and `mise.lock` except Bun
+and uutils coreutils, and runs on macOS so a pin without macOS builds fails
+before it lands. Change Bun in `mise.toml`, `engines.bun`, and `@types/bun`
+together, then run `mise lock`. coreutils stays on 0.12.0 because 0.13.0 ships
+no macOS builds.

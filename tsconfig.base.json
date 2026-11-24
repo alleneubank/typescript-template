@@ -35,7 +35,7 @@
 
     "noEmit": true,
 
-    // Bun 1.4.3 ships these via bun-types (aliased as @types/bun). `bun --check`
+    // Bun ships these via bun-types (aliased as @types/bun). `bun --check`
     // only resolves bun:test when this list includes "bun".
     "types": ["bun"]
   }
